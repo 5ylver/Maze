@@ -24,12 +24,29 @@ function preload() {
 
 function create() {
   walls = this.physics.add.staticGroup();
-  walls.create(765, 780, "wall").setScale(0.75).refreshBody();
-  walls.create(765, -25, "wall").setScale(0.75).refreshBody();
+  walls
+    .create(765, 780, "wall")
+    .setScale(0.75)
+    .refreshBody()
+    .setPipeline("Light2D");
+  walls
+    .create(765, -25, "wall")
+    .setScale(0.75)
+    .refreshBody()
+    .setPipeline("Light2D");
 
-  character = this.physics.add.sprite(0, 690, "character");
+  character = this.physics.add
+    .sprite(0, 690, "character")
+    .setPipeline("Light2D");
 
   character.setCollideWorldBounds(true);
+
+  const light = this.lights.addLight(0, 0, 200);
+  this.lights.enable().setAmbientColor(0);
+  this.input.on("pointermove", (pointer) => {
+    light.x = pointer.x;
+    light.y = pointer.y;
+  });
 
   this.anims.create({
     key: "left",
