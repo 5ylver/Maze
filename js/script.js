@@ -15,7 +15,8 @@ let config = {
 let game = new Phaser.Game(config);
 
 function preload() {
-  this.load.image("wall", "assets/base.png");
+  this.load.image("wall", "assets/block_h.png");
+  this.load.image("wall-v", "assets/block_v.png");
   this.load.spritesheet("character", "assets/character.png", {
     frameWidth: 32,
     frameHeight: 62,
@@ -26,21 +27,36 @@ function preload() {
 
 function create() {
   walls = this.physics.add.staticGroup();
-  walls
-    .create(765, 780, "wall")
-    .setScale(0.75)
-    .refreshBody()
-    .setPipeline("Light2D");
-  walls
-    .create(765, -25, "wall")
-    .setScale(0.75)
-    .refreshBody()
-    .setPipeline("Light2D");
 
-  character = this.physics.add
-    .sprite(0, 690, "character")
-    .setPipeline("Light2D");
+  // Border
+  walls.create(850, 18, "wall").setDisplaySize(1540, 35).refreshBody(); //top
+  walls.create(18, 380, "wall-v").setDisplaySize(35, 757).refreshBody(); //left
+  walls.create(805, 740, "wall").setDisplaySize(1540, 35).refreshBody(); //bottom
+  walls.create(1520, 250, "wall-v").setDisplaySize(35, 757).refreshBody(); //right
 
+  walls.create(180, 120, "wall").setDisplaySize(150, 35).refreshBody(); //1
+  walls.create(120, 180, "wall-v").setDisplaySize(35, 150).refreshBody(); //2
+  walls.create(350, 130, "wall-v").setDisplaySize(35, 300).refreshBody(); //3
+  walls.create(400, 270, "wall").setDisplaySize(600, 35).refreshBody(); //4
+  walls.create(210, 360, "wall-v").setDisplaySize(35, 150).refreshBody(); //5
+  walls.create(130, 520, "wall").setDisplaySize(180, 35).refreshBody(); //6
+  walls.create(500, 620, "wall").setDisplaySize(700, 35).refreshBody(); //7
+  walls.create(420, 500, "wall-v").setDisplaySize(35, 200).refreshBody(); //8
+  walls.create(550, 420, "wall").setDisplaySize(280, 35).refreshBody(); //9
+  walls.create(680, 360, "wall-v").setDisplaySize(35, 150).refreshBody(); //10
+  walls.create(750, 150, "wall").setDisplaySize(450, 35).refreshBody(); //11
+  walls.create(950, 240, "wall-v").setDisplaySize(35, 150).refreshBody(); //12
+  walls.create(1050, 320, "wall").setDisplaySize(220, 35).refreshBody(); //13
+  walls.create(1150, 380, "wall-v").setDisplaySize(35, 150).refreshBody(); //14
+  walls.create(1050, 450, "wall").setDisplaySize(220, 35).refreshBody(); //15
+  walls.create(1050, 600, "wall-v").setDisplaySize(35, 300).refreshBody(); //16
+  walls.create(1150, 100, "wall-v").setDisplaySize(35, 150).refreshBody(); //17
+  walls.create(1390, 220, "wall").setDisplaySize(220, 35).refreshBody(); //18
+  walls.create(1350, 380, "wall-v").setDisplaySize(35, 350).refreshBody(); //19
+  walls.create(1390, 620, "wall").setDisplaySize(220, 35).refreshBody(); //20
+
+  character = this.physics.add.sprite(60, 0, "character");
+  // .setPipeline("Light2D");
   character.setCollideWorldBounds(true);
 
   const light = this.lights.addLight(0, 0, 200);
