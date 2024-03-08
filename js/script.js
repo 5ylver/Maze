@@ -20,6 +20,8 @@ function preload() {
     frameWidth: 32,
     frameHeight: 62,
   });
+  this.load.audio("ambient_sound", "assets/sounds/ghost-whispers.mp3");
+  this.load.audio("step_sound", "assets/sounds/footstep.ogg");
 }
 
 function create() {
@@ -42,11 +44,17 @@ function create() {
   character.setCollideWorldBounds(true);
 
   const light = this.lights.addLight(0, 0, 200);
-  this.lights.enable().setAmbientColor(0);
+  this.lights.enable().setAmbientColor(0x555555);
   this.input.on("pointermove", (pointer) => {
     light.x = pointer.x;
     light.y = pointer.y;
   });
+
+  ambientSound = this.sound.add("ambient_sound", { volume: 0.5 });
+  ambientSound.loop = true;
+  // ambientSound.play();
+
+  stepSound = this.sound.add("step_sound", { volume: 1 });
 
   this.anims.create({
     key: "left",
@@ -104,15 +112,19 @@ function update() {
   if (cursors.right.isDown) {
     character.setVelocityX(move);
     character.anims.play("right", true);
+    if (!stepSound.isPlaying) stepSound.play();
   } else if (cursors.left.isDown) {
     character.setVelocityX(-move);
     character.anims.play("left", true);
+    if (!stepSound.isPlaying) stepSound.play();
   } else if (cursors.down.isDown) {
     character.setVelocityY(move);
     character.anims.play("down", true);
+    if (!stepSound.isPlaying) stepSound.play();
   } else if (cursors.up.isDown) {
     character.anims.play("up", true);
     character.setVelocityY(-move);
+    if (!stepSound.isPlaying) stepSound.play();
   } else {
     character.anims.play("turn");
   }
